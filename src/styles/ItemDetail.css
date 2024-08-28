@@ -1,0 +1,40 @@
+.content{
+    display: block;
+    margin: 20px auto; 
+    max-width: 100%; 
+    height: auto;
+}
+
+.img{
+  align-self: center;
+}
+
+.RegionOverview{
+  text-align: left;
+  font-style: Poppins;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 27px;
+  padding-bottom: 10px;
+}
+
+.shortdescription{
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  justify-content: space-between;
+}
+
+.DSbody{
+  text-align: center;
+  padding: 20px;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  }
+
+
+
+  footer {
+    text-align: center;
+    color: white;
+  }

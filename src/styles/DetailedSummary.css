@@ -1,0 +1,37 @@
+.detailed-summary {
+  display: block;
+  margin: 20px auto; 
+  max-width: 100%; 
+  height: auto;
+}
+
+.RegionOverview {
+text-align: left;
+font-family: 'Poppins', sans-serif;
+font-weight: 600;
+font-size: 18px;
+line-height: 27px;
+padding-bottom: 10px;
+}
+
+.shortdescription {
+justify-content: space-between;  
+max-width: 600px;     
+margin: 0 auto;       
+padding-top: 10px;
+padding-bottom: 20px;
+letter-spacing: 0.5px
+ 
+}
+
+.DSbody {
+text-align: center;  
+padding: 20px;
+padding-top: 100px;
+padding-bottom: 30px;
+}
+
+footer {
+text-align: center;
+color: white;
+}

@@ -1,13 +1,93 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Main container styling */
+.main_Container {
+  width: 100%;
+  height: 100vh;
+  margin-top: -36px;
+
+  position: relative;
+ 
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.top_header{
+  z-index: 2000!important;
 }
+
+
+/* Add this to your CSS file or in a <style> tag */
+.qrContainer {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  background-color: black; /* Optional: Add a background color for better visibility */
+}
+
+.videoFullHeight {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the video covers the container while maintaining aspect ratio */
+}
+
+
+/* .qrContainer {
+  width: 100%;
+  height: 100vh; 
+  display: flex;
+  justify-content: center;
+
+  align-items: flex-start;
+ 
+}
+
+.videoFullHeight {
+  width: 100%;
+ 
+  max-width: 100%;
+} */
+
+/* Popup overlay styling */
+.popupOverlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 130px; /* Adjust height if needed */
+
+  display: flex;
+  align-items: flex-end; /* Align popup to bottom */
+  justify-content: center; /* Center horizontally */
+  z-index: 1000; /* Ensure it's above other content */
+  margin-bottom: 20px;
+}
+
+/* Popup content styling */
+.popupContent {
+  width: 272px;
+  height: 75px;
+  background: #125B57;
+  border-radius: 12px;
+  border: 2px solid; /* Updated for border-top */
+  padding: 12px;
+  box-sizing: border-box;
+  color: white;
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: space-evenly; /* Center content horizontally */
+  gap: 0px;
+  position: absolute;
+  top: 0;
+}
+
+
+
+/* ------------------------- This Section is for Language Component ------------------------------------*/
+.custom-border {
+  border-bottom: 1px solid var(--Global-Border-100, #F2F2F2);
+}
+
+

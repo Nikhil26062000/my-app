@@ -1,0 +1,25 @@
+.home-page {
+    text-align: center;
+    padding-top:80px ;
+    max-width: 100%;
+
+  }
+  
+  .hpbody{
+    text-align: center;
+    padding-top: 30px;
+  }
+  
+  /* .home-page img {
+    display: block;
+    margin: 20px auto; 
+    max-width: 100%; 
+    height: auto;
+  } */
+  
+  footer {
+    text-align: center;
+    color: white;
+    position: sticky;
+  }
+  

@@ -1,0 +1,182 @@
+[
+    {
+        "qr_id": "QR0001",
+        "link_name": "biodiversity-app",
+        "name": "Download app",
+        "Where to scan?": "Outside the app"
+    },
+    {
+        "qr_id": "QR0002",
+        "link_name": "western-ghats",
+        "name": "Western Ghats ",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0003",
+        "link_name": "mandala-garden",
+        "name": "Mandala Garden",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0004",
+        "link_name": "dry-arid",
+        "name": "Dry Arid Section",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0005",
+        "link_name": "wetland",
+        "name": "Wetland",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0006",
+        "link_name": "central-indian-forest",
+        "name": "Central Indian Forest",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0007",
+        "link_name": "grasslands",
+        "name": "Grasslands",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0008",
+        "link_name": "compost-pit",
+        "name": "Compost Pit",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0009",
+        "link_name": "gazebo",
+        "name": "Gazebo",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0010",
+        "link_name": "latana-elephant",
+        "name": "Lantana Elephant",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0011",
+        "link_name": "recycled-art",
+        "name": "Recycled Art",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0012",
+        "link_name": "bee-hotel",
+        "name": "Bee Hotel ",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0013",
+        "link_name": "banyan-tree",
+        "name": "Banyan Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0014",
+        "link_name": "mahua-tree",
+        "name": "Mahua Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0015",
+        "link_name": "bael-tree",
+        "name": "Bael Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0016",
+        "link_name": "kokum-tree",
+        "name": "Kokum Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0017",
+        "link_name": "bakul-tree",
+        "name": "Bakul Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0018",
+        "link_name": "hinganbet-tree",
+        "name": "Hinganbet Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0019",
+        "link_name": "hiwar-tree",
+        "name": "Hiwar Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0020",
+        "link_name": "tamhan-tree",
+        "name": "Tamhan Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0021",
+        "link_name": "sesbania-tree",
+        "name": "Sesbania Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0022",
+        "link_name": "moringa-tree",
+        "name": "Moringa Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0023",
+        "link_name": "palash-tree",
+        "name": "Palash Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0024",
+        "link_name": "rubber-tree",
+        "name": "Rubber Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0025",
+        "link_name": "arjun-tree",
+        "name": "Arjun Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0026",
+        "link_name": "teak-tree",
+        "name": "Teak Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0027",
+        "link_name": "tendu-tree",
+        "name": "Tendu Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0028",
+        "link_name": "bahava-tree",
+        "name": "Bahava Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0029",
+        "link_name": "karanj-tree",
+        "name": "Karanj Tree",
+        "Where to scan?": "Inside the app"
+    },
+    {
+        "qr_id": "QR0030",
+        "link_name": "manvel-bamboo",
+        "name": "Manvel Bamboo",
+        "Where to scan?": "Inside the app"
+    }
+]
