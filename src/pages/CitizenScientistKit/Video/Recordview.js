@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CameraAlt, Stop, SwitchCamera } from "@mui/icons-material"; // Import icons from Material UI
+import ClearIcon from '@mui/icons-material/Clear';
+import Footer from "../../../components/Footer";
 
-const RecordView = () => {
+
+const RecordView = ({ title }) => {
   const [status, setStatus] = useState("Ready to Record");
   const [mediaBlobUrl, setMediaBlobUrl] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -145,8 +148,25 @@ const RecordView = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
+    <div
+        className="h-[106px] bg-[#125B57] z-[90] relative flex justify-center items-center"
+        style={{
+          borderTopLeftRadius: '0px',
+          borderTopRightRadius: '0px',
+          borderBottomLeftRadius: '36px',
+          borderBottomRightRadius: '36px',
+          boxShadow: '0px 4px 4px 0px #00000040',
+        }}
+      >
+        <div className="absolute left-[18.95px]">
+          <ClearIcon className="text-[#FFFFFF] cursor-pointer" onClick={() => navigate(-1)} />
+        </div>
+        <div className="absolute">
+          <p className="font-inter font-[500] text-[16px] leading-[19.36px] text-[#FFFFFF]">Citizen scientist kit</p>
+        </div>
+      </div>
       {!isPopupOpen ? (
-        <div>
+        <div className="absolute mt-[-134px]">
           {isCameraOpen ? (
             <div className="relative">
               <div>
@@ -244,6 +264,7 @@ const RecordView = () => {
           </div>
         </div>
       )}
+      <Footer color="#125b57" title={title} />
     </div>
   );
 };
