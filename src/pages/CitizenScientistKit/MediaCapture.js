@@ -667,9 +667,9 @@ const MediaCapture = ({ title }) => {
         />
 
         <div className="flex space-x-6 mb-4 z-[1000]">
-          <button className="text-white font-inter font-[500] text-[16px] leading-[19.36px]">VIDEO</button>
-          <button className="text-white font-inter font-[500] text-[16px] leading-[19.36px]">PHOTO</button>
-          <button className="text-white font-inter font-[500] text-[16px] leading-[19.36px]">AUDIO</button>
+          <button className="text-white font-inter font-[500] text-[16px] leading-[19.36px]" onClick={()=>navigate("/video")}>VIDEO</button>
+          <button className="text-white font-inter font-[500] text-[16px] leading-[19.36px] underline">PHOTO</button>
+          <button className="text-white font-inter font-[500] text-[16px] leading-[19.36px]" onClick={()=>navigate("/audio")}>AUDIO</button>
         </div>
 
         <div className="flex space-x-6 mb-6 pb-[100px] z-[1000]">
