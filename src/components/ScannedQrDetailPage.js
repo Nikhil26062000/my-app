@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingAnimation from "./LoadingAnimation";
 import { useNavigate } from "react-router-dom";
+import { ShimmerDiv } from "shimmer-effects-react";
 
 const ScannedQrDetailPage = () => {
   const fixedColor = "#125B57";
@@ -13,6 +14,8 @@ const ScannedQrDetailPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true); // State for loading
   const navigate = useNavigate()
+  const [isImageLoaded, setIsImageLoaded] = useState(false); // State to manage image load
+
 
   useEffect(() => {
     const fetchQrData = async () => {
@@ -48,12 +51,17 @@ const ScannedQrDetailPage = () => {
     return <LoadingAnimation />; // Render loader while data is loading
   }
 
+  const handleImageLoad = () => {
+    setIsImageLoaded(true); // Set image loaded state to true when image is fully loaded
+  };
+
   return (
     <div className="min-h-screen">
       <Top_Header title={data?.qrscan_name} />
       <div className="w-full box-border mt-[16px] px-5  overflow-hidden">
         {/* Image Section */}
         <div className=" rounded-2xl w-full py-2">
+        {!isImageLoaded && <ShimmerDiv mode="light" height={256} width="100%" className="!rounded-lg"/>}
           <img
             src={
               data?.image
@@ -61,7 +69,9 @@ const ScannedQrDetailPage = () => {
                 : "https://images.pexels.com/photos/3844788/pexels-photo-3844788.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
             }
             alt="Profile"
-            className="w-full h-64 object-cover rounded-2xl"
+            className={`w-full h-64 object-cover rounded-lg ${isImageLoaded ? "block" : "hidden"}`}
+            onLoad={handleImageLoad}
+
           />
         </div>
 
