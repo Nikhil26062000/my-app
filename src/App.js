@@ -27,6 +27,8 @@ import ResetPassword from './pages/ResetPassword/ResetPassword.js';
 import ScannedQrDetailPage from "./components/ScannedQrDetailPage.js";
 import { MyContext } from "./context/accountProvider.js";
 import Landing from "./pages/LandingPage/Landing.js";
+import RecordView from "./pages/CitizenScientistKit/Video/Recordview.js";
+import AudioRecorder from "./pages/CitizenScientistKit/Audio/Audio.jsx";
 
 function App() {
   const {token} = useContext(MyContext)
@@ -62,6 +64,8 @@ function App() {
          
           <Route path="/qrDetails/:id" element={token ? <ScannedQrDetailPage /> : <Navigate to="/" />} />
           <Route path="/camera" element={token ? <MediaCapture /> : <Navigate to="/" />} />
+          <Route path="/video" element={token ? <RecordView /> : <Navigate to="/" />} />
+          <Route path="/audio" element={token ? <AudioRecorder /> : <Navigate to="/" />} />
           <Route path="/region/:regionId" element={token ? <BriefSummary /> : <Navigate to="/" />} />
           <Route path="/region/:regionId/detailed" element={token ? <DetailedSummary /> : <Navigate to="/" />} />
           <Route path="/region/:regionId/itemlist" element={token ? <ItemList /> : <Navigate to="/" />} />
