@@ -34,7 +34,7 @@ import CommentsPage from "./pages/Comments/CommentsPage.jsx";
 function App() {
   const {token} = useContext(MyContext)
  
-  console.log = function () { }
+  // console.log = function () { }
   
   
   return (
