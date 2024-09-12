@@ -7,6 +7,7 @@ import Footer from "../../../components/Footer";
 
 const RecordView = ({ title }) => {
   const [status, setStatus] = useState("Ready to Record");
+  const [blobCopy, setBlobCopy] = useState()
   const [mediaBlobUrl, setMediaBlobUrl] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -80,6 +81,8 @@ const RecordView = ({ title }) => {
           const blob = new Blob(chunksRef.current, { type: "video/webm" });
           const url = URL.createObjectURL(blob);
           setMediaBlobUrl(url);
+          setBlobCopy(blob)
+          // uploadVideo(blob);
           chunksRef.current = [];
           setIsRecording(false);
           setIsPopupOpen(true);
@@ -121,6 +124,7 @@ const RecordView = ({ title }) => {
     if (mediaBlobUrl) {
       URL.revokeObjectURL(mediaBlobUrl);
     }
+    uploadVideo(blobCopy);
     setMediaBlobUrl(null);
     setIsPopupOpen(false);
     setStatus("Ready to Record");
@@ -129,6 +133,29 @@ const RecordView = ({ title }) => {
       streamRef.current = null; // Clear the reference
     }
     setIsCameraOpen(false); // Close the camera when the popup is closed
+  };
+
+//! Logic to upload the video
+  const uploadVideo = (blob) => {
+    const formData = new FormData();
+    formData.append('video', blob, 'recording.webm');
+    
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
+    // Make a POST request to your backend
+    // fetch('YOUR_BACKEND_ENDPOINT', {
+    //   method: 'POST',
+    //   body: formData,
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log('Video uploaded successfully:', data);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error uploading video:', error);
+    //   });
   };
 
   useEffect(() => {
