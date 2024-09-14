@@ -6,6 +6,7 @@ import QrCodeIcon from '@mui/icons-material/QrCode';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from 'react-router-dom'; 
 import HomeIcon from '@mui/icons-material/Home';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
 const Footer = ({ color = '#000' }) => {
   const navigate = useNavigate();
@@ -44,6 +45,15 @@ const Footer = ({ color = '#000' }) => {
         onClick={() => navigate('/qrcode')}
         aria-label="Navigate to QR Code"
       />
+
+<BottomNavigationAction
+        label="Posts"
+        icon={<PostAddIcon />}
+        sx={{ color: 'white' }}
+        onClick={() => navigate('/posts')}
+        aria-label="Navigate to Posts"
+      />
+      
       <BottomNavigationAction
         label="Settings"
         icon={<SettingsIcon />}
@@ -52,6 +62,9 @@ const Footer = ({ color = '#000' }) => {
         aria-label="Navigate to Settings"
       />
     </BottomNavigation>
+
+
+
   );
 };
 
