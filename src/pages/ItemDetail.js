@@ -6,7 +6,8 @@ import Header from "../components/Header";
 import "../styles/ItemDetail.css";
 import { MyContext } from "../context/accountProvider";
 import LoadingAnimation from "../components/LoadingAnimation"; // Import the loading animation component
-import { ShimmerDiv } from "shimmer-effects-react";
+
+import ItemDeatilShimmer from "../components/Shimmer/ItemDeatilShimmer";
 
 const ItemDetail = () => {
   const { region_id, species_id } = useParams();
@@ -99,7 +100,7 @@ const ItemDetail = () => {
       <div className="content">
         {item.species_image_name && (
           <div className="w-full h-[300px]">
-          {!isImageLoaded && <ShimmerDiv mode="light" height={300} width="100%" className="!rounded-[20px]"/>}
+          {!isImageLoaded && <ItemDeatilShimmer  height={300} width="100"  />}
             <img
               src={`${process.env.PUBLIC_URL}/assests/${item.species_image_name}`}
               alt={item.species_common_name}

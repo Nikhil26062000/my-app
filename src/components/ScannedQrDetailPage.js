@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingAnimation from "./LoadingAnimation";
 import { useNavigate } from "react-router-dom";
-import { ShimmerDiv } from "shimmer-effects-react";
+
+import ShimmerMap from "./Shimmer/ShimmerMap";
 
 const ScannedQrDetailPage = () => {
   const fixedColor = "#125B57";
@@ -61,7 +62,7 @@ const ScannedQrDetailPage = () => {
       <div className="w-full box-border mt-[16px] px-5  overflow-hidden">
         {/* Image Section */}
         <div className=" rounded-2xl w-full py-2">
-        {!isImageLoaded && <ShimmerDiv mode="light" height={256} width="100%" className="!rounded-lg"/>}
+        {!isImageLoaded && <ShimmerMap height={256} width="100%"/>}
           <img
             src={
               data?.image

@@ -173,7 +173,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { MyContext } from "../context/accountProvider";
 import LoadingAnimation from "../components/LoadingAnimation"; // Import the loading animation component
-import { ShimmerCategoryItems, ShimmerDiv } from "shimmer-effects-react";
+
+import ShimmerMap from "../components/Shimmer/ShimmerMap";
 
 const ItemList = () => {
   const { regionId } = useParams();
@@ -322,7 +323,7 @@ const ItemList = () => {
                 key={index}
                 className="w-full"
               >
-              {!isImageLoaded && <ShimmerCategoryItems mode="light" />
+              {!isImageLoaded && <ShimmerMap height={128} width="100" />
 }
                 <li className="flex mb-2 mt-2 border-b gap-[16px] border-gray-300 shadow-lg rounded-md">
                

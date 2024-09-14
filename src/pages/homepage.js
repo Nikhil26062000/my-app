@@ -132,7 +132,7 @@ import { useSession } from "../components/SessionContext";
 import { MyContext } from "../context/accountProvider";
 import HomepageHeader from "../components/HomepageHeader";
 
-import { ShimmerDiv } from "shimmer-effects-react";
+import ShimmerMap from "../components/Shimmer/ShimmerMap";
 
 const CustomButton = styled(Button)(({ bgcolor }) => ({
   borderRadius: "16px",
@@ -216,7 +216,8 @@ const HomePage = () => {
 
       <section className="px-[20px] py-4">
         {/* Show shimmer while image is loading */}
-        {!isImageLoaded && <ShimmerDiv mode="light" height={348} width="100%" className="!rounded-lg"/>}
+        {!isImageLoaded && <ShimmerMap height={348} width="100" />
+}
 
         {/* Actual image */}
         <img

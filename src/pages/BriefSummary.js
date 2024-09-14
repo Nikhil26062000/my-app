@@ -6,7 +6,8 @@ import Footer from "../components/Footer";
 import LoadingAnimation from "../components/LoadingAnimation";
 import "../styles/BriefSummary.css";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { ShimmerDiv } from "shimmer-effects-react";
+
+import ShimmerMap from "../components/Shimmer/ShimmerMap";
 
 const CloseButton = () => {
   const navigate = useNavigate();
@@ -137,7 +138,7 @@ const BriefSummary = () => {
       <div className="relative">
         {/* Image with shimmer effect */}
         {!isImage1Loaded && (
-          <ShimmerDiv mode="light" height={198} width="100%" className="!rounded-[10px]"/>
+          <ShimmerMap height={198} width="100" />
         )}
   
         {/* Always render the image, and manage visibility with classes */}
@@ -170,7 +171,7 @@ const BriefSummary = () => {
   
       {/* Image with shimmer effect */}
       {!isImage2Loaded && (
-        <ShimmerDiv mode="light" height={348} width="100%" className="!rounded-[8px]" />
+        <ShimmerMap height={348} width="100" />
       )}
   
       {/* Always render the image, and manage visibility with classes */}
