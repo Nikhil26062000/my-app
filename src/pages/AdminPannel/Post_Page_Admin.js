@@ -2,21 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../context/accountProvider";
 import Top_Header from "../../components/components/Common_Components/Top_Header";
-import Navbar from "./Navbar";
-import PostLists from "./PostLists";
+
 import AddIcon from "@mui/icons-material/Add";
 import Footer from "../../components/Footer";
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-
+import ShimmerMap from "../../components/Shimmer/ShimmerMap";
 import PostPage from "../../components/Shimmer/PostPage";
+import PostLists_Admin from "./PostLists_Admin";
+import Navbar from "../CitizenScientistKit/Navbar";
 
-const Posts = () => {
+const Post_Page_Admin = () => {
   const fixedColor = "#125B57";
   const navigate = useNavigate();
   const { setToken } = useContext(MyContext);
   const [postData, setPostData] = useState();
   const [loading, setLoading] = useState(false);
-  const [isAdmin,setIsAdmin] = useState(true);
   
 
   useEffect(() => {
@@ -74,14 +73,12 @@ const Posts = () => {
   
   return (
     <div className="w-full box-border">
-      <Top_Header title="Citizen scientist kit" />
-      
+      <Top_Header title="Admin Page" />
+      <section className="w-full mt-[14px] flex justify-center">
+        <Navbar isForum={true} />
+      </section>
 
-      {
-        isAdmin && <div className="w-full px-[20px] pt-4 flex justify-end ">
-        <button className="py-2  rounded-md bg-gray-100 px-2" onClick={()=>navigate("/posts/admin/edit")}><ManageAccountsIcon className="pr-1"/>Manage Post</button>
-        </div>
-      }
+      
 
       <section className="w-full  box-border py-2 px-5">
         {!loading && (
@@ -100,8 +97,7 @@ const Posts = () => {
           postData.map((ele, index) => {
             return (
               <div key={ele.pid}>
-                <PostLists
-                  ele={ele}
+                <PostLists_Admin
                   isImage={true}
                   url_link={ele.url_link}
                   name={ele.username ? ele.username : "Dummy User"}
@@ -115,14 +111,7 @@ const Posts = () => {
             );
           })}
 
-        <section className="w-full flex justify-end py-5">
-          <button className="ml-auto px-[15px] py-[13px] flex justify-center items-center bg-[#125B57] gap-[8px] text-white rounded-[9px]">
-            <AddIcon />
-            <p className="font-inter font-[600] text-[12px] leading-[14.52px] text-[#FFFFFF]">
-              Upload
-            </p>
-          </button>
-        </section>
+        
       </section>
 
       <section className="mt-16">
@@ -132,4 +121,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default Post_Page_Admin;

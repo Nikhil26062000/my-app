@@ -30,6 +30,7 @@ import Landing from "./pages/LandingPage/Landing.js";
 import RecordView from "./pages/CitizenScientistKit/Video/Recordview.js";
 import AudioRecorder from "./pages/CitizenScientistKit/Audio/Audio.jsx";
 import CommentsPage from "./pages/Comments/CommentsPage.jsx";
+import Post_Page_Admin from './pages/AdminPannel/Post_Page_Admin.js'
 
 function App() {
   const {token} = useContext(MyContext)
@@ -63,6 +64,7 @@ function App() {
           <Route path="/discussion" element={token ? <Discussion /> : <Navigate to="/" />} />
           <Route path="/posts" element={token ? <Posts /> : <Navigate to="/" />} />
           <Route path="/posts/:id/comments" element={token ? <CommentsPage /> : <Navigate to="/" />} />
+          <Route path="/posts/admin/edit" element={token ? <Post_Page_Admin /> : <Navigate to="/" />} />
          
           <Route path="/qrDetails/:id" element={token ? <ScannedQrDetailPage /> : <Navigate to="/" />} />
           <Route path="/camera" element={token ? <MediaCapture /> : <Navigate to="/" />} />

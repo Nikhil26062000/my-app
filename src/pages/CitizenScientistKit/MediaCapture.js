@@ -481,6 +481,11 @@ const MediaCapture = ({ title }) => {
   const navigate = useNavigate();
   const { setToken } = useContext(MyContext);
 
+
+  function _jsonTrim(jsonArray){
+    return JSON.parse(JSON.stringify(jsonArray).replace(/"\s+|\s+"/g,'"'))
+}
+
   useEffect(() => {
     const checkToken = () => {
       const storedToken = localStorage.getItem('token');
@@ -563,26 +568,21 @@ const MediaCapture = ({ title }) => {
     setDescription(''); // Clear the descriptions
   };
 
-  const sendImage = () => {
+  const sendImage = async () => {
     const latitude = localStorage.getItem('latitude');
     const longitude = localStorage.getItem('longitude');
-
-    // Decode the base64 string (after the comma) to binary data
+  
+    // Decode base64 string to binary data
     const byteString = atob(imageSrc.split(',')[1]);
-
-    // Create an array buffer to store the binary data
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const uint8Array = new Uint8Array(arrayBuffer);
-
-    // Convert the binary string to a Uint8Array
+  
     for (let i = 0; i < byteString.length; i++) {
       uint8Array[i] = byteString.charCodeAt(i);
     }
-
-    // Convert the Uint8Array to a Blob (which can be sent as binary data)
+  
     const blob = new Blob([uint8Array], { type: 'image/jpeg' });
-
-    // Prepare the form data to send to the backend
+  
     const formData = new FormData();
     formData.append('signaturefile', blob, 'captured-image.jpg');
     formData.append('latitude', latitude);
@@ -590,45 +590,37 @@ const MediaCapture = ({ title }) => {
     formData.append('userid', localStorage.getItem('userid'));
     formData.append('description', description);
     formData.append('username', localStorage.getItem('username'));
-    console.log(formData);
-
-    formData.forEach((value, key) => {
-      console.log(`${key}:`, value);
-     
-    });
-
-    // Send the data to your backend
-    fetch('https://farmersforforests.org/admin/acc/appdata/usersignature', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-          console.log("obj");
-          return response.json();
-        } else {
-          console.log("text");
-          return response.text();
-        }
-      })
-      .then((data) => {
-        
-        console.log( data);
-        toast.success(data.msgtext);
-        setPopupMessage("User signature has been saved");
-       
-        closePopup();
-        setTimeout(()=>setPopupMessage(""),1000)
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        toast.error(error.message);
-        setPopupMessage('Failed to upload image and location.');
+  
+    try {
+      const response = await fetch('https://farmersforforests.org/admin/acc/appdata/usersignature', {
+        method: 'POST',
+        body: formData,
       });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log(response)
+  
+      const contentType = response.headers.get('content-type');
+      let data;
+  
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        data = { msgtext: text };
+      }
+      console.log(data);
+      toast.success(data.msgtext);
+      setPopupMessage(data.msgtext);
+      closePopup();
+      setTimeout(() => setPopupMessage(''), 1000);
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error(error.message);
+      setPopupMessage('Failed to upload image and location.');
+    }
   };
 
  if(isLoading){
@@ -736,3 +728,18 @@ const MediaCapture = ({ title }) => {
 };
 
 export default MediaCapture;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

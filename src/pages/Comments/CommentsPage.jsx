@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns"; // Optional: for formatting the time ago
+import Top_Header from "../../components/components/Common_Components/Top_Header";
 
 // Dummy comments data
 const dummyComments = [
@@ -76,35 +77,102 @@ const dummyComments = [
   },
 ];
 
-const CommentsPage = () => {
+// ShimmerComment component (Skeleton Loader)
+const ShimmerComment = () => {
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-4">Comments</h2>
-      {dummyComments.map((comment) => (
-        <div
-          key={comment.id}
-          className="flex items-start space-x-4 mb-6 border-b pb-4"
-        >
-          {/* User Image */}
-          <img
-            src={comment.image}
-            alt="User"
-            className="w-12 h-12 rounded-full"
-          />
-
-          {/* Comment Details */}
-          <div className="flex-1">
-            <div className="flex justify-between items-center mb-1">
-              <h3 className="text-lg font-medium">{comment.name}</h3>
-              {/* Displaying "time ago" format using date-fns */}
-              <span className="text-sm text-gray-500">
-                {formatDistanceToNow(comment.time)} ago
-              </span>
-            </div>
-            <p className="text-gray-700">{comment.comment}</p>
-          </div>
+    <div className="flex items-start space-x-4 mb-6 border-b pb-4 animate-pulse">
+      {/* Shimmer for User Image */}
+      <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
+      
+      {/* Shimmer for Comment Details */}
+      <div className="flex-1 space-y-2">
+        <div className="flex justify-between items-center">
+          <div className="w-24 h-4 bg-gray-300 rounded"></div>
+          <div className="w-16 h-4 bg-gray-300 rounded"></div>
         </div>
-      ))}
+        <div className="w-full h-3 bg-gray-300 rounded"></div>
+        <div className="w-3/4 h-3 bg-gray-300 rounded"></div>
+      </div>
+    </div>
+  );
+};
+
+const CommentsPage = () => {
+  const [loading, setLoading] = useState(true);
+  const [comment, setComment] = useState("");
+  
+  useEffect(() => {
+    // Simulate loading for 1 second
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handleCommentSubmit = () => {
+    // Logic to handle comment submission
+    console.log("Comment submitted:", comment);
+    setComment(""); // Clear the input field
+  };
+
+  return (
+    <div>
+    <Top_Header title="Comments" />
+    <div className="relative min-h-screen p-[20px] w-full mx-auto pb-20">
+    
+      <h2 className="text-[16] font-semibold mb-4">Comments</h2>
+      {loading
+        ? // Show shimmer effect while loading
+          Array(10)
+            .fill(0)
+            .map((_, index) => <ShimmerComment key={index} />)
+        : // Show actual comments after loading
+          dummyComments.map((comment) => (
+            <div
+              key={comment.id}
+              className="flex items-start space-x-4 mb-6 border-b pb-4"
+            >
+              {/* User Image */}
+              <img
+                src={comment.image}
+                alt="User"
+                className="w-12 h-12 rounded-full"
+              />
+
+              {/* Comment Details */}
+              <div className="flex-1">
+                <div className="flex justify-between items-center mb-1">
+                  <h3 className="text-[14px] font-medium">{comment.name}</h3>
+                  <span className="text-[12px] text-gray-500">
+                    {formatDistanceToNow(comment.time)} ago
+                  </span>
+                </div>
+                <p className="text-gray-400">{comment.comment}</p>
+              </div>
+            </div>
+          ))}
+      
+      {/* Fixed bottom input field and button */}
+      <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 shadow-md">
+        <div className="flex space-x-2 flex-wrap">
+          <input
+            type="text"
+            value={comment}
+            onChange={handleCommentChange}
+            placeholder="Add a comment..."
+            className="flex-1 p-2 border rounded"
+          />
+          <button
+            onClick={handleCommentSubmit}
+            className="bg-[#125B57] text-sm text-white p-2 rounded"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
     </div>
   );
 };

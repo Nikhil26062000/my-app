@@ -3,17 +3,18 @@ import React, { useState } from "react";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import ShareIcon from "@mui/icons-material/Share";
-
+import ApproveButton,{ DeleteButton, RejectButton } from "../../components/ApproveButton";
 import ShimmerMap from "../../components/Shimmer/ShimmerMap";
-import { useNavigate } from "react-router-dom";
 
 
-const PostLists = ({ele,isImage,name,occupation,place,day,msg,number_of_responses,url_link}) => {
- 
+const PostLists_Admin = ({isImage,name,occupation,place,day,msg,number_of_responses,url_link}) => {
+  const [prev,setPrev] = useState({
+    app:true,
+    rej:true,
+    del:true
+  })
 
   const [isload,setIsLoad] = useState(false)
-  const navigate = useNavigate()
-  console.log(ele.pid);
 
   const handleImageLoad = () =>{
     setIsLoad(true)
@@ -66,14 +67,14 @@ const PostLists = ({ele,isImage,name,occupation,place,day,msg,number_of_response
         </section>
       </section>
 
-      <section className="w-full py-1 border-2 text-[8px] border-[#125B57] cursor-pointer text-[#125B57] border-t-0 border-b-2 border-l-2 border-r-2  flex items-center justify-center">
+      <section className="w-full py-1 border-2 text-[8px] border-[#125B57] text-[#125B57] border-t-0 border-b-2 border-l-2 border-r-2  flex items-center justify-center">
         <div className="w-[33%] flex justify-center items-center gap-2 border-2 border-[#125B57] border-t-0 border-b-0 border-l-0 border-r-2">
           <ThumbUpIcon className="text-[15px] text-[#125B57]" />
           <p className="font-inter font-[400] text-[8px] leading-[9.86px] ">Like</p>
         </div>
 
         <div className="w-[33%] flex justify-center items-center gap-2 border-2 border-[#125B57] border-t-0 border-b-0 border-l-0 border-r-2">
-          <CommentIcon className="text-[15px] text-[#125B57]" onClick={()=>navigate(`/posts/${ele.pid}/comments`)}/>
+          <CommentIcon className="text-[15px] text-[#125B57]" />
           <p className="font-inter font-[400] text-[8px] leading-[9.86px]">Comment</p>
         </div>
 
@@ -84,13 +85,29 @@ const PostLists = ({ele,isImage,name,occupation,place,day,msg,number_of_response
       </section>
 
 
-     
+      {(prev.app || prev.rej || prev.del) && (
+  <section className="w-full py-1 border-2 text-[8px] border-[#125B57] text-[#125B57] border-t-0 border-b-2 border-l-2 border-r-2 flex items-center justify-center">
+    <div className="w-[33%] flex justify-center items-center gap-2 border-2 border-[#125B57] border-t-0 border-b-0 border-l-0 border-r-2">
+      {prev.app && <ApproveButton />}
+    </div>
+
+    <div className="w-[33%] flex justify-center items-center gap-2 border-2 border-[#125B57] border-t-0 border-b-0 border-l-0 border-r-2">
+      {prev.rej && <RejectButton />}
+    </div>
+
+    <div className="w-[33%] flex justify-center items-center gap-2">
+      {prev.del && <DeleteButton />}
+
+    </div>
+  </section>
+)}
+
 
     </section>
   );
 };
 
-export default PostLists;
+export default PostLists_Admin;
 
 
 
