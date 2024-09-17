@@ -1,0 +1,21 @@
+{
+    "privileges": [
+      {
+        "id": 1,
+        "name": "edit"
+      },
+      {
+        "id": 2,
+        "name": "view"
+      },
+      {
+        "id": 3,
+        "name": "update"
+      },
+      {
+        "id": 4,
+        "name": "delete"
+      }
+    ]
+  }
+  
