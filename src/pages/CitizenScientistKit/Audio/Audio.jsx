@@ -298,6 +298,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear'; // Import ClearIcon from MUI
 import { api_url } from '../../../constants';
+import { toast } from 'react-toastify';
 
 const AudioRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -423,6 +424,9 @@ const AudioRecorder = () => {
       }
   
       const data = await response.json();
+      if(data.isValid===true) {
+        toast.success(data.msgtext)
+      }
       console.log('Audio uploaded successfully:', data);
     } catch (error) {
       console.error('Error uploading audio:', error);

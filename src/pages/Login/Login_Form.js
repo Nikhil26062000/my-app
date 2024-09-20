@@ -79,6 +79,8 @@ const Login_Form = () => {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userid", response.data.user_details.userid);
           localStorage.setItem("username", response.data.user_details.username);
+          localStorage.setItem("role",response.data.user_details.role)
+
 
           setToken(response.data.jwt_token);  // Update context
           navigate("/");  // Navigate to home after setting the tok

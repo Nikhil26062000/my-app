@@ -4,6 +4,7 @@ import { CameraAlt, Stop, SwitchCamera } from "@mui/icons-material"; // Import i
 import ClearIcon from '@mui/icons-material/Clear';
 import Footer from "../../../components/Footer";
 import { api_url } from "../../../constants";
+import { toast } from "react-toastify";
 
 
 const RecordView = ({ title }) => {
@@ -134,6 +135,7 @@ const RecordView = ({ title }) => {
       streamRef.current = null; // Clear the reference
     }
     setIsCameraOpen(false); // Close the camera when the popup is closed
+    
   };
 
 //! Logic to upload the video
@@ -169,6 +171,9 @@ const uploadVideo = async (blob) => {
     }
 
     const data = await response.json();
+    if(data.isValid==true) {
+      toast.success(data.msgtext)
+    }
     console.log('Video uploaded successfully:', data);
   } catch (error) {
     console.error('Error uploading video:', error);
@@ -293,7 +298,7 @@ const uploadVideo = async (blob) => {
         </div>
       ) : (
         <div className="popup">
-          <div className="popup-content">
+          <div className="popup-content py-5">
             <video
               src={mediaBlobUrl}
               controls
@@ -304,7 +309,7 @@ const uploadVideo = async (blob) => {
               className="close-button bg-blue-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out mt-4 shadow-md"
               onClick={handleClosePopup}
             >
-              Close
+              Send
             </button>
           </div>
         </div>

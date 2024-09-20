@@ -6,7 +6,7 @@ const PostPage = () => {
   
     return (
         <section className="w-full py-2 animate-pulse">
-          <section className="border-2 border-[#125B57] py-4 box-border pt-[12px] pr-[21px] pb-[0px] pl-[21px]">
+          <section className=" py-4 box-border pt-[12px] pr-[21px] pb-[0px] pl-[21px]">
             {/* Avatar and titles shimmer */}
             <div className="w-full flex justify-start gap-[26px]">
               {/* Avatar shimmer */}
@@ -41,12 +41,12 @@ const PostPage = () => {
           </section>
     
           {/* Buttons shimmer */}
-          <section className="w-full py-1 border-2 text-[8px] border-[#125B57] text-[#125B57] border-t-0 border-b-2 border-l-2 border-r-2 flex items-center justify-center">
-            <div className="w-[33%] flex justify-center items-center gap-2 border-2 border-[#125B57] border-t-0 border-b-0 border-l-0 border-r-2">
+          <section className="w-full py-1 text-[8px] border-[#125B57] text-[#125B57] flex items-center justify-center">
+            <div className="w-[33%] flex justify-center items-center gap-2">
               <div className="w-[15px] h-[15px] bg-gray-300 rounded-full"></div>
               <div className="w-[30%] h-[10px] bg-gray-300 rounded"></div>
             </div>
-            <div className="w-[33%] flex justify-center items-center gap-2 border-2 border-[#125B57] border-t-0 border-b-0 border-l-0 border-r-2">
+            <div className="w-[33%] flex justify-center items-center gap-2 ">
               <div className="w-[15px] h-[15px] bg-gray-300 rounded-full"></div>
               <div className="w-[30%] h-[10px] bg-gray-300 rounded"></div>
             </div>

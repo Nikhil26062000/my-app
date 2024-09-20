@@ -53,18 +53,12 @@ const Post_Page_Admin = () => {
   return (
     <div className="w-full box-border">
       <Top_Header title="Admin Page" />
-      <section className="w-full mt-[14px] flex justify-center">
-        <Navbar isForum={true} />
-      </section>
+     
       <section className="w-full box-border py-2 px-5">
         {loading && (
           <div className="flex flex-col gap-5">
             <PostPage />
-            <PostPage />
-            <PostPage />
-            <PostPage />
-            <PostPage />
-            <PostPage />
+            
           </div>
         )}
         {postData &&

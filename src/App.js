@@ -70,7 +70,7 @@ function App() {
          
           <Route path="/qrDetails/:id" element={token ? <ScannedQrDetailPage /> : <Navigate to="/" />} />
           <Route path="/camera" element={token ? <MediaCapture /> : <Navigate to="/" />} />
-          <Route path="/video" element={token ? <RecordView /> : <Navigate to="/" />} />
+          {/* <Route path="/video" element={token ? <RecordView /> : <Navigate to="/" />} /> */}
           <Route path="/audio" element={token ? <AudioRecorder /> : <Navigate to="/" />} />
           <Route path="/region/:regionId" element={token ? <BriefSummary /> : <Navigate to="/" />} />
           <Route path="/region/:regionId/detailed" element={token ? <DetailedSummary /> : <Navigate to="/" />} />
