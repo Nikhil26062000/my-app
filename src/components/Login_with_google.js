@@ -40,11 +40,14 @@ const Login_with_google = ({ btn_name }) => {
               
             }else{
               // toast.success("Login Successful")
+              console.log();
               localStorage.setItem("token", response.data.token);
               localStorage.setItem("userid", response.data.user_details.userid);
               localStorage.setItem("username", response.data.user_details.username);
+              localStorage.setItem("role",response.data.user_details.role)
     
-              setToken(response.data.jwt_token);  // Update context
+              setToken(response.data.jwt_token);  // Update context\
+              // localStorage.setItem("role", response)
               navigate("/");  // Navigate to home after setting the tok
            
             }

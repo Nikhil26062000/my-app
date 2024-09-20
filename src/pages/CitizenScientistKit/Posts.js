@@ -14,12 +14,14 @@ import { api_url } from "../../constants";
 const Posts = () => {
   const fixedColor = "#125B57";
   const navigate = useNavigate();
-  const { setToken } = useContext(MyContext);
+  const { setToken} = useContext(MyContext);
   const [postData, setPostData] = useState();
   const [loading, setLoading] = useState(false);
   const [isAdmin,setIsAdmin] = useState(true);
   const [postLike,setPostLike] = useState()
   const [commentsCount,setCommentsCount] = useState();
+  // const [userRole,setUserRole] = useState()
+  const [roleBase,setRoleBase] = useState()
   
 
   useEffect(() => {
@@ -92,6 +94,32 @@ const Posts = () => {
   }, []);
   
   
+  useEffect(() => {
+
+    let role_id = localStorage.getItem('role');
+    console.log("My role id is : ",role_id);
+    const fetchRoleBase = async () => {
+      const res = await fetch(`${process.env.PUBLIC_URL}/Rolebase.json`);
+      const data = await res.json();
+      console.log(data.rolebase)
+      setRoleBase(data.rolebase);
+      let temp = data?.rolebase?.filter((f)=>f.role_id==role_id)
+      if(temp.length==0){
+        setIsAdmin(false)
+      }else{
+        console.log(temp)
+        if(temp[0]['role_name']=="f4f" || temp[0]['role_name']=="admin"){
+          setIsAdmin(true)
+        }else{
+          setIsAdmin(false)
+        }
+      }
+     
+    };
+
+    fetchRoleBase()
+    
+  },[])
   
   return (
     <div className="w-full box-border">

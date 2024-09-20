@@ -169,3 +169,22 @@ export const handle_approve_reject_post = async (ele,type) => {
     console.log(error);
   }
 };
+
+export const set_Privileges = async (formData) => {
+  try {
+    const response = await fetch(`${api_url}/admin/acc/privilegemap`, {
+      method: 'POST', // Specify POST method
+      headers: {
+        'Content-Type': 'application/json', // Set content type to JSON
+      },
+      body: JSON.stringify(formData), // Convert formData to JSON string
+    });
+
+    const data = await response.json(); // Parse JSON response
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+

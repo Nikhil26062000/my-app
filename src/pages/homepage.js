@@ -144,7 +144,7 @@ const CustomButton = styled(Button)(({ bgcolor }) => ({
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { token, setToken } = useContext(MyContext);
+  const { token, setToken,role } = useContext(MyContext);
   const [headerFooterColor, setHeaderFooterColor] = useState("#125B57");
   const [isImageLoaded, setIsImageLoaded] = useState(false); // State to manage image load
   const fixedColor = "#125B57";
@@ -166,7 +166,7 @@ const HomePage = () => {
 
     checkToken();
     window.addEventListener("storage", checkToken);
-
+    // console.log("User role :",role)
     return () => {
       window.removeEventListener("storage", checkToken);
     };

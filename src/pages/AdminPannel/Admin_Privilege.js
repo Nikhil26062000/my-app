@@ -194,10 +194,12 @@
 import { useState, useEffect } from "react";
 import Top_Header from "../../components/components/Common_Components/Top_Header";
 import Footer from "../../components/Footer";
-import { adminPrivelegs } from "../../services/ApiServices";
+import { adminPrivelegs, set_Privileges } from "../../services/ApiServices";
 
 const RoleSelection = () => {
   const [roles, setRoles] = useState([]);
+  const [copyRoles, setCopyRoles] = useState([]);
+  const [copyRoles2, setCopyRoles2] = useState([]);
   const [privileges, setPrivileges] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectedRole, setSelectedRole] = useState("");
@@ -207,35 +209,50 @@ const RoleSelection = () => {
   const [username, setUsername] = useState("");
   const fixedColor = "#125B57";
   const [filterUser, setFilterUser] = useState([]);
+  const [already_present_role, set, Already_Present_role] = useState("");
+  // let [temp,setTemp] = useState(true)
 
   let obj = {};
 
   // Fetch roles, privileges, and users from the public folder and API
+  const fetchRoles = async () => {
+    const res = await fetch(`${process.env.PUBLIC_URL}/roles.json`);
+    const data = await res.json();
+    setRoles(data.roles);
+  };
+
+  const fetchPrivileges = async () => {
+    const res = await fetch(`${process.env.PUBLIC_URL}/privileges.json`);
+    const data = await res.json();
+    setPrivileges(data.privileges);
+  };
+
+  const fetchUsers = async () => {
+    const res = await adminPrivelegs();
+    setUsers(res);
+  };
   useEffect(() => {
-    const fetchRoles = async () => {
-      const res = await fetch(`${process.env.PUBLIC_URL}/roles.json`);
-      const data = await res.json();
-      setRoles(data.roles);
-    };
-
-    const fetchPrivileges = async () => {
-      const res = await fetch(`${process.env.PUBLIC_URL}/privileges.json`);
-      const data = await res.json();
-      setPrivileges(data.privileges);
-    };
-
-    const fetchUsers = async () => {
-      const res = await adminPrivelegs();
-      setUsers(res);
-    };
+  
 
     Promise.all([fetchRoles(), fetchPrivileges(), fetchUsers()]).then(() =>
       setLoading(false)
     );
   }, []);
 
-  const handleRoleChange = (e) => {
-    setSelectedRole(e.target.value);
+  const handleRoleChange = (id) => {
+    const updatedRoles = roles.map((role) => {
+      if (role.role_id === id) {
+        // Set only the selected role to `isChecked: true`
+        return { ...role, isChecked: true };
+      } else {
+        // Set all other roles to `isChecked: false`
+        return { ...role, isChecked: false };
+      }
+    });
+
+    setRoles(updatedRoles);
+
+    console.log("Roles after click radio ", updatedRoles);
   };
 
   const handlePrivilegeChange = (id) => {
@@ -261,16 +278,30 @@ const RoleSelection = () => {
 
   // Handle user selection to ensure only one user can be selected
   const handleUserChange = (e) => {
-    const selectedOption = e.target.options[e.target.selectedIndex];
-    const userid = parseInt(selectedOption.value, 10);
+    roles.map((r) => {
+      r.isChecked = false;
+    });
+    console.log("Role value", roles);
+
+    console.log(e);
+    // setTemp(!temp)
+    // const selectedOption = e.target.options[e.target.selectedIndex];
+    const pid = e.target.value;
     // users.map((ele) => {
     //   ele.privilege = JSON.parse(ele.privilege);
     // });
-    const filteredUser = users.find((user) => user.pid == userid);
-    console.log(filteredUser);
+    const filteredUser = users.find((user) => user.pid == pid);
+    console.log(parseInt(filteredUser.role));
+
+    roles.map((role) => {
+      if (role.role_id == parseInt(filteredUser.role) && role.role_id != 0) {
+        role.isChecked = true;
+      }
+    });
     setFilterUser(filteredUser);
-    setSelectedUser(userid);
-    setUsername(selectedOption.text);
+    setSelectedUser(pid);
+    console.log("Updated Roles", roles);
+    // setUsername(selectedOption.text);
     // console.log(filterUser);
 
     obj = {
@@ -282,16 +313,22 @@ const RoleSelection = () => {
     };
 
     console.log(obj);
-    console.log("Main prev : ", privileges);
+    // console.log("Main prev : ", privileges);
     privileges.map((p) => (p.isChecked = obj[p.name]));
-    console.log("updatedPriv :", privileges);
+    // console.log("updatedPriv :", privileges);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // const selectedPrivilegesArray = Object.keys(selectedPrivileges).filter(
     //   (key) => selectedPrivileges[key]
     // );
+    let finalRole = {};
+    roles.map((r) => {
+      if (r.isChecked == true) {
+        finalRole = r;
+      }
+    });
 
     console.log("Backend data prev :", privileges);
     const selectedPrivileges = privileges
@@ -301,14 +338,17 @@ const RoleSelection = () => {
     console.log(selectedPrivileges);
 
     const formData = {
-      role: selectedRole,
+      role: finalRole,
 
       privileges: selectedPrivileges,
-      userid: selectedUser,
-      username: username,
+      pid: selectedUser,
     };
 
     console.log("Form Data:", formData);
+
+    const res = await set_Privileges(formData);
+    console.log(res);
+    fetchUsers()
   };
 
   // Shimmer Effect
@@ -379,7 +419,8 @@ const RoleSelection = () => {
                         type="radio"
                         value={role.role_name}
                         name="role"
-                        onChange={handleRoleChange}
+                        checked={role.isChecked}
+                        onChange={() => handleRoleChange(role.role_id)}
                         className="text-blue-600 focus:ring-blue-500 focus:ring-2"
                       />
                       <span className="capitalize">{role.role_name}</span>
