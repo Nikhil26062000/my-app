@@ -1,6 +1,6 @@
 import React from "react";
 
-const ApproveButton = ({ onClick }) => {
+export const ApproveButton = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
@@ -11,7 +11,7 @@ const ApproveButton = ({ onClick }) => {
   );
 };
 
-export default ApproveButton;
+
 
 export const DeleteButton = ({ onClick }) => {
   return (

@@ -466,6 +466,7 @@ import Footer from '../../components/Footer';
 import { toast } from 'react-toastify';
 import SendIcon from '@mui/icons-material/Send';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import { api_url } from '../../constants';
 // import { Toast } from 'react-toastify/dist/components';
 
 const MediaCapture = ({ title }) => {
@@ -592,10 +593,12 @@ const MediaCapture = ({ title }) => {
     formData.append('username', localStorage.getItem('username'));
   
     try {
-      const response = await fetch('https://farmersforforests.org/admin/acc/appdata/usersignature', {
+      console.log(`${api_url}/admin/acc/appdata/usersignature`);
+      const response = await fetch(`${api_url}/admin/acc/appdata/usersignature`, {
         method: 'POST',
         body: formData,
       });
+      console.log(response);
   
       if (!response.ok) {
         throw new Error('Network response was not ok');

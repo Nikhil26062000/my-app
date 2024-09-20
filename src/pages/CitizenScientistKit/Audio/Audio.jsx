@@ -297,6 +297,7 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear'; // Import ClearIcon from MUI
+import { api_url } from '../../../constants';
 
 const AudioRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -335,7 +336,7 @@ const AudioRecorder = () => {
         };
 
         audioRecorderRef.current.onstop = () => {
-          const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+          const blob = new Blob(audioChunksRef.current, { type: 'audio/weba' });
           const url = URL.createObjectURL(blob);
           setAudioBlobUrl(url);
           setAudioBlob(blob); // Store the audio blob
@@ -388,27 +389,46 @@ const AudioRecorder = () => {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
-  const uploadAudio = (blob) => {
-    const formData = new FormData();
-    formData.append('audio', blob, 'recording.webm');
-    console.log('Sending audio data to backend...');
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
+  const uploadAudio = async (blob, description) => {
+    try {
+      // Get current position and proceed once we have the coordinates
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+  
+      const { latitude, longitude } = position.coords;
+      localStorage.setItem('latitude', latitude);
+      localStorage.setItem('longitude', longitude);
+  
+      const formData = new FormData();
+      formData.append('signaturefile', blob, 'recording.weba');
+      formData.append('latitude', latitude); // Use actual latitude
+      formData.append('longitude', longitude); // Use actual longitude
+      formData.append('userid', localStorage.getItem('userid'));
+      formData.append('description', "This is my audio");
+      formData.append('username', localStorage.getItem('username'));
+  
+      console.log('Sending audio data to backend...');
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+  
+      const response = await fetch(`${api_url}/admin/acc/appdata/usersignature`, {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Audio uploaded successfully:', data);
+    } catch (error) {
+      console.error('Error uploading audio:', error);
     }
-
-    // fetch('YOUR_BACKEND_ENDPOINT', {
-    //   method: 'POST',
-    //   body: formData,
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log('Audio uploaded successfully:', data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error uploading audio:', error);
-    //   });
   };
-
+  
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100">
       {/* Custom Header */}
@@ -465,7 +485,7 @@ const AudioRecorder = () => {
                 className="close-button bg-blue-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out mt-4 shadow-md"
                 onClick={handleClosePopup}
               >
-                Close
+                Send
               </button>
             </div>
           </div>

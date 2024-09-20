@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MyContext } from "../context/accountProvider";
+import { api_url } from "../constants";
 
 const Login_with_google = ({ btn_name }) => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Login_with_google = ({ btn_name }) => {
 
         console.log("User Info:", userInfo);
         const response = await axios.post(
-          "https://farmersforforests.org/admin/acc/login",
+          `${api_url}/admin/acc/login`,
           {
             email: userInfo.data.email,
             email_verified: userInfo.data.email_verified,
@@ -32,9 +33,9 @@ const Login_with_google = ({ btn_name }) => {
         );
         console.log(response);
             if(response.data.isValid===false){
-              console.log("Email is registered");
-              toast.error(response.data.msgtext)
-              console.log("Email is registered2");
+              // console.log("Email is registered");
+              // toast.error(response.data.msgtext)
+              // console.log("Email is registered2");
 
               
             }else{

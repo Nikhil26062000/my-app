@@ -23,6 +23,8 @@ export const MyContext = createContext();
 export const MyProvider = ({ children }) => {
   // Initialize state with the token from localStorage
   const [token, setToken] = useState(localStorage.getItem("token") || null);
+  // const api_url = "http://192.168.1.101/";
+  // const api_url = "https://farmersforforests.org/";
 
   // Save token to localStorage when it changes
   useEffect(() => {

@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import LoadingAnimation from "../components/LoadingAnimation";
 import "../styles/BriefSummary.css";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { api_url } from "../constants";
 
 import ShimmerMap from "../components/Shimmer/ShimmerMap";
 
@@ -73,7 +74,8 @@ const BriefSummary = () => {
   }, [navigate, setToken]);
 
   useEffect(() => {
-    fetch("https://farmersforforests.org/admin/acc/appdata/homepage")
+    console.log(`${api_url}/admin/acc/appdata/homepage`);
+    fetch(`${api_url}/admin/acc/appdata/homepage`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

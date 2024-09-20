@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CameraAlt, Stop, SwitchCamera } from "@mui/icons-material"; // Import icons from Material UI
 import ClearIcon from '@mui/icons-material/Clear';
 import Footer from "../../../components/Footer";
+import { api_url } from "../../../constants";
 
 
 const RecordView = ({ title }) => {
@@ -136,27 +137,44 @@ const RecordView = ({ title }) => {
   };
 
 //! Logic to upload the video
-  const uploadVideo = (blob) => {
+const uploadVideo = async (blob) => {
+  try {
+    // Get current position and proceed once we have the coordinates
+    const position = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+
+    const { latitude, longitude } = position.coords;
+
     const formData = new FormData();
-    formData.append('video', blob, 'recording.webm');
-    
+    formData.append('signaturefile', blob, 'recording.webm');
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
+    formData.append('userid', localStorage.getItem('userid'));
+    formData.append('description', "This is my video");
+    formData.append('username', localStorage.getItem('username'));
+
+    // Optional: Log FormData entries for debugging
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
 
-    // Make a POST request to your backend
-    // fetch('YOUR_BACKEND_ENDPOINT', {
-    //   method: 'POST',
-    //   body: formData,
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log('Video uploaded successfully:', data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error uploading video:', error);
-    //   });
-  };
+    const response = await fetch(`${api_url}/admin/acc/appdata/usersignature`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    console.log('Video uploaded successfully:', data);
+  } catch (error) {
+    console.error('Error uploading video:', error);
+  }
+};
+
 
   useEffect(() => {
     if (isCameraOpen) {

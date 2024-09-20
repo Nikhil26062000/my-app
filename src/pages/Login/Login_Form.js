@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { encrypt } from "../../HelperFunctions/calcMD5";
 import axios from "axios";
 import { MyContext } from "../../context/accountProvider";
+import { api_url } from "../../constants";
 
 const Login_Form = () => {
   const [focusedInput, setFocusedInput] = useState(null);
@@ -66,7 +67,7 @@ const Login_Form = () => {
     // API call for real login
     try {
       const response = await axios.post(
-        "https://farmersforforests.org/admin/acc/login",
+        `${api_url}/admin/acc/login`,
         {
           email: email,
           password: hashedPassword,

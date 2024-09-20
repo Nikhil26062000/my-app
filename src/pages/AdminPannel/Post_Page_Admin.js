@@ -9,6 +9,8 @@ import ShimmerMap from "../../components/Shimmer/ShimmerMap";
 import PostPage from "../../components/Shimmer/PostPage";
 import PostLists_Admin from "./PostLists_Admin";
 import Navbar from "../CitizenScientistKit/Navbar";
+import { api_url } from "../../constants";
+import { unverified_post } from "../../services/ApiServices";
 
 const Post_Page_Admin = () => {
   const fixedColor = "#125B57";
@@ -16,7 +18,7 @@ const Post_Page_Admin = () => {
   const { setToken } = useContext(MyContext);
   const [postData, setPostData] = useState();
   const [loading, setLoading] = useState(false);
-  
+  const [btn_clicked,set_btn_clicked] = useState(true);
 
   useEffect(() => {
     const checkToken = () => {
@@ -37,81 +39,55 @@ const Post_Page_Admin = () => {
       window.removeEventListener("storage", checkToken);
     };
   }, [navigate, setToken]);
-
   useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await fetch(
-          "https://farmersforforests.org/admin/acc/appdata/usersignaturelist"
-        );
-  
-        // Check if the response status is OK
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-  
-        // Check if the response content type is JSON
-        const contentType = response.headers.get('Content-Type');
-        if (contentType && contentType.includes('application/json')) {
-          console.log(response);
-          const data = await response.json();
-          console.log(data);
-          setPostData(data);
-          setLoading(true);
-        } else {
-          const text = await response.text();
-          console.error('Unexpected content type:', contentType);
-          console.error('Response body:', text);
-        }
-      } catch (error) {
-        console.error('Fetch error:', error);
-      }
+    const fetch_unverified_post = async () => {
+      setLoading(true); // Set loading to true before fetching
+      const res = await unverified_post();
+      console.log(res);
+      setPostData(res);
+      setLoading(false); // Set loading to false after fetching
     };
-  
-    fetchPost();
-  }, []);
-  
+    fetch_unverified_post();
+  }, [btn_clicked]);
+
   return (
     <div className="w-full box-border">
       <Top_Header title="Admin Page" />
       <section className="w-full mt-[14px] flex justify-center">
         <Navbar isForum={true} />
       </section>
-
-      
-
-      <section className="w-full  box-border py-2 px-5">
-        {!loading && (
-          <>
-            <div className="flex flex-col gap-5">
-              <PostPage />
-              <PostPage />
-              <PostPage />
-              <PostPage />
-              <PostPage />
-              <PostPage />
-            </div>
-          </>
+      <section className="w-full box-border py-2 px-5">
+        {loading && (
+          <div className="flex flex-col gap-5">
+            <PostPage />
+            <PostPage />
+            <PostPage />
+            <PostPage />
+            <PostPage />
+            <PostPage />
+          </div>
         )}
         {postData &&
-          postData.map((ele, index) => {
-            return (
-              <div key={ele.pid}>
-                <PostLists_Admin
-                  isImage={true}
-                  url_link={ele.url_link}
-                  name={ele.username ? ele.username : "Dummy User"}
-                  occupation="environmental science tracher"
-                  place="Mumbai "
-                  day="Yesterday"
-                  msg={ele.description }
-                  number_of_responses="3 Responses"
-                />
-              </div>
-            );
-          })}
-
-        
+          postData.map((ele) => (
+            <div key={ele.pid}>
+              <PostLists_Admin
+                ele={ele}
+                isImage={ele.type == "img"}
+                isAudio={ele.type == "aud"}
+                isVideo={ele.type == "vid"}
+                url_link={ele.url_link}
+                name={ele.username ? ele.username : "Dummy User"}
+                occupation="environmental science tracher"
+                place="Mumbai "
+                day="Yesterday"
+                msg={ele.description}
+                number_of_responses="3 Responses"
+                set_btn_clicked={set_btn_clicked}
+                btn_clicked={btn_clicked}
+           
+              />
+            </div>
+          ))}
       </section>
 
       <section className="mt-16">

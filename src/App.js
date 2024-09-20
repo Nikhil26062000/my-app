@@ -64,7 +64,7 @@ function App() {
           <Route path="/kit" element={token ? <CitizenScientistKit /> : <Navigate to="/" />} />
           <Route path="/discussion" element={token ? <Discussion /> : <Navigate to="/" />} />
           <Route path="/posts" element={token ? <Posts /> : <Navigate to="/" />} />
-          <Route path="/posts/:id/comments" element={token ? <CommentsPage /> : <Navigate to="/" />} />
+          <Route path="/posts/:id" element={token ? <CommentsPage /> : <Navigate to="/" />} />
           <Route path="/posts/admin/edit" element={token ? <Post_Page_Admin /> : <Navigate to="/" />} />
           <Route path="/admin/privilege" element={token ? <Admin_Privilege /> : <Navigate to="/" />} />
          

@@ -2,19 +2,27 @@
     "privileges": [
       {
         "id": 1,
-        "name": "edit"
+        "name": "edit",
+        "isChecked": false
       },
       {
         "id": 2,
-        "name": "view"
+        "name": "view",
+        "isChecked": false
       },
       {
         "id": 3,
-        "name": "update"
+        "name": "update",
+        "isChecked": false
       },
       {
         "id": 4,
-        "name": "delete"
+        "name": "delete",
+        "isChecked": false
+      }, {
+        "id": 5,
+        "name": "approve",
+        "isChecked": false
       }
     ]
   }

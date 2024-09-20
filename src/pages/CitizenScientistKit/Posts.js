@@ -9,6 +9,7 @@ import Footer from "../../components/Footer";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 import PostPage from "../../components/Shimmer/PostPage";
+import { api_url } from "../../constants";
 
 const Posts = () => {
   const fixedColor = "#125B57";
@@ -17,6 +18,8 @@ const Posts = () => {
   const [postData, setPostData] = useState();
   const [loading, setLoading] = useState(false);
   const [isAdmin,setIsAdmin] = useState(true);
+  const [postLike,setPostLike] = useState()
+  const [commentsCount,setCommentsCount] = useState();
   
 
   useEffect(() => {
@@ -42,8 +45,22 @@ const Posts = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        let uid = localStorage.getItem("userid");
+  
+        // Create the request body
+        const requestBody = JSON.stringify({
+          userid: uid,
+        });
+  
         const response = await fetch(
-          "https://farmersforforests.org/admin/acc/appdata/usersignaturelist"
+          `${api_url}/admin/acc/appdata/usersignaturelist`,
+          {
+            method: 'POST', // Use POST method
+            headers: {
+              'Content-Type': 'application/json', // Set content type to JSON
+            },
+            body: requestBody, // Send the user ID in the request body
+          }
         );
   
         // Check if the response status is OK
@@ -56,8 +73,10 @@ const Posts = () => {
         if (contentType && contentType.includes('application/json')) {
           console.log(response);
           const data = await response.json();
-          console.log(data);
-          setPostData(data);
+          
+          setPostData(data.user_signature);
+          setPostLike(data.post_like)
+          setCommentsCount(data.comments)
           setLoading(true);
         } else {
           const text = await response.text();
@@ -71,6 +90,8 @@ const Posts = () => {
   
     fetchPost();
   }, []);
+  
+  
   
   return (
     <div className="w-full box-border">
@@ -102,7 +123,9 @@ const Posts = () => {
               <div key={ele.pid}>
                 <PostLists
                   ele={ele}
-                  isImage={true}
+                  isImage={ele.type=="img"}
+                  isAudio={ele.type=="aud"}
+                  isVideo={ele.type=="vid"}
                   url_link={ele.url_link}
                   name={ele.username ? ele.username : "Dummy User"}
                   occupation="environmental science tracher"
@@ -110,6 +133,8 @@ const Posts = () => {
                   day="Yesterday"
                   msg={ele.description }
                   number_of_responses="3 Responses"
+                  likeCount={postLike}
+                  commentsCount={commentsCount}
                 />
               </div>
             );
