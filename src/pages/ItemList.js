@@ -175,6 +175,7 @@ import { MyContext } from "../context/accountProvider";
 import LoadingAnimation from "../components/LoadingAnimation"; // Import the loading animation component
 
 import ShimmerMap from "../components/Shimmer/ShimmerMap";
+import axiosInstance from "../utils/axiosInstance";
 
 const ItemList = () => {
   const { regionId } = useParams();
@@ -215,12 +216,48 @@ const ItemList = () => {
     };
   }, [navigate, setToken]);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       if (regionId) {
+  //         const response = await axios.post(
+  //           "https://farmersforforests.org/admin/acc/appdata/specieslistinfo",
+  //           {
+  //             region_id: regionId,
+  //           }
+  //         );
+  //         console.log(response);
+  //         setNumOfSpecies(response.data.species_list_name);
+  //         setAllItems(response.data.species_list_data);
+  //         setFilterItem(response.data.species_list_data); // Show all items initially
+
+  //         if (response.data.species_list_data.length > 0) {
+  //           setRegionName(response.data.species_list_data[0].region_name);
+  //         }
+  //       } else {
+  //         console.error("Region ID not found");
+  //       }
+  //       // Delay setting loading to false by 1 second
+  //       setTimeout(() => setLoading(false), 1000);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [regionId]);
+
+
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (regionId) {
-          const response = await axios.post(
-            "https://farmersforforests.org/admin/acc/appdata/specieslistinfo",
+          console.log("Axios running");
+          const response = await axiosInstance.post(
+            "/admin/acc/appdata/specieslistinfo",
             {
               region_id: regionId,
             }
@@ -228,7 +265,7 @@ const ItemList = () => {
           console.log(response);
           setNumOfSpecies(response.data.species_list_name);
           setAllItems(response.data.species_list_data);
-          setFilterItem(response.data.species_list_data); // Show all items initially
+          setFilterItem(response.data.species_list_data);
 
           if (response.data.species_list_data.length > 0) {
             setRegionName(response.data.species_list_data[0].region_name);
@@ -236,7 +273,6 @@ const ItemList = () => {
         } else {
           console.error("Region ID not found");
         }
-        // Delay setting loading to false by 1 second
         setTimeout(() => setLoading(false), 1000);
       } catch (error) {
         console.error("Error fetching data:", error);

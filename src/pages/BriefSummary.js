@@ -9,6 +9,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { api_url } from "../constants";
 
 import ShimmerMap from "../components/Shimmer/ShimmerMap";
+import axiosInstance from "../utils/axiosInstance";
 
 const CloseButton = () => {
   const navigate = useNavigate();
@@ -73,35 +74,73 @@ const BriefSummary = () => {
     };
   }, [navigate, setToken]);
 
+  // useEffect(() => {
+  //   console.log(`${api_url}/admin/acc/appdata/homepage`);
+  //   fetch(`${api_url}/admin/acc/appdata/homepage`)
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       const region = data.find((item) => item.region_id === regionId);
+  //       if (region) {
+  //         setRegionData(region);
+  //         const fullDescription = region.discription;
+  //         const words = fullDescription.split(" ");
+  //         const truncated =
+  //           words.slice(0, 25).join(" ") + (words.length > 25 ? "..." : "");
+  //         setTruncatedDescription(truncated);
+  //       } else {
+  //         setError("Region not found");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching region data:", error);
+  //       // setError("Error fetching region data");
+  //     })
+  //     .finally(() => {
+  //       setTimeout(() => setShowLoading(false), 1000); // Hide loading after 2 seconds
+  //     });
+  // }, [regionId]);
+
+
+
+
+
+
+//! API CALL USING AXIOS INSTANCE
   useEffect(() => {
-    console.log(`${api_url}/admin/acc/appdata/homepage`);
-    fetch(`${api_url}/admin/acc/appdata/homepage`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
+    // Define the async function inside useEffect
+    const fetchData = async () => {
+      try {
+        console.log(`${api_url}/admin/acc/appdata/homepage`);
+        const response = await axiosInstance.get(`/admin/acc/appdata/homepage`);
+        const data = response.data;
+        
+        // Find the region data
         const region = data.find((item) => item.region_id === regionId);
         if (region) {
           setRegionData(region);
           const fullDescription = region.discription;
-          const words = fullDescription.split(" ");
+          const words = fullDescription.split(' ');
           const truncated =
-            words.slice(0, 25).join(" ") + (words.length > 25 ? "..." : "");
+            words.slice(0, 25).join(' ') + (words.length > 25 ? '...' : '');
           setTruncatedDescription(truncated);
         } else {
-          setError("Region not found");
+          setError('Region not found');
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching region data:", error);
-        // setError("Error fetching region data");
-      })
-      .finally(() => {
-        setTimeout(() => setShowLoading(false), 1000); // Hide loading after 2 seconds
-      });
+      } catch (error) {
+        console.error('Error fetching region data:', error);
+        setError('Error fetching region data');
+      } finally {
+        setTimeout(() => setShowLoading(false), 1000); // Hide loading after 1 second
+      }
+    };
+
+    // Call the async function
+    fetchData();
   }, [regionId]);
 
   if (showLoading) {

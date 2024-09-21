@@ -133,6 +133,7 @@ import Footer from '../components/Footer';
 import '../styles/DetailedSummary.css';
 import { MyContext } from '../context/accountProvider';
 import LoadingAnimation from '../components/LoadingAnimation'; // Import the loading animation component
+import axiosInstance from '../utils/axiosInstance';
 
 const DetailedSummary = () => {
   const { regionId } = useParams();
@@ -170,25 +171,60 @@ const DetailedSummary = () => {
     };
   }, [navigate, setToken]);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('https://farmersforforests.org/admin/acc/appdata/summarypage', {
+  //         method: 'POST',
+  //         body: JSON.stringify({ region_id: regionId }),
+  //         headers: { 'Content-Type': 'application/json' },
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error(`Network response was not ok: ${response.statusText}`);
+  //       }
+
+  //       const data = await response.json();
+  //       if (data && data.region_id === regionId) {
+  //         setRegionData({
+  //           title: data.title,
+  //           description: data.discription,
+  //           region_name: data.region_name,
+  //         });
+  //       } else {
+  //         setError('No data found for the specified region');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching region data:', error);
+  //       setError('Error fetching region data');
+  //     } finally {
+  //       // Set loading to false after data fetch, but keep animation for 1 second
+  //       setTimeout(() => setLoading(false), 1000);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [regionId]);
+
+
+
+
+
+//! api call using axios
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://farmersforforests.org/admin/acc/appdata/summarypage', {
-          method: 'POST',
-          body: JSON.stringify({ region_id: regionId }),
-          headers: { 'Content-Type': 'application/json' },
+        console.log("This is running axios");
+        const response = await axiosInstance.post('/admin/acc/appdata/summarypage', {
+          region_id: regionId,
         });
 
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        if (data && data.region_id === regionId) {
+        if (response.data && response.data.region_id === regionId) {
           setRegionData({
-            title: data.title,
-            description: data.discription,
-            region_name: data.region_name,
+            title: response.data.title,
+            description: response.data.discription, // Assuming this is a typo; should be `description`
+            region_name: response.data.region_name,
           });
         } else {
           setError('No data found for the specified region');
@@ -197,8 +233,7 @@ const DetailedSummary = () => {
         console.error('Error fetching region data:', error);
         setError('Error fetching region data');
       } finally {
-        // Set loading to false after data fetch, but keep animation for 1 second
-        setTimeout(() => setLoading(false), 1000);
+        setTimeout(() => setLoading(false), 1000); // Keep loading for 1 second
       }
     };
 

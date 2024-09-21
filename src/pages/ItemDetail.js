@@ -8,6 +8,7 @@ import { MyContext } from "../context/accountProvider";
 import LoadingAnimation from "../components/LoadingAnimation"; // Import the loading animation component
 
 import ItemDeatilShimmer from "../components/Shimmer/ItemDeatilShimmer";
+import axiosInstance from "../utils/axiosInstance";
 
 const ItemDetail = () => {
   const { region_id, species_id } = useParams();
@@ -43,31 +44,63 @@ const ItemDetail = () => {
     };
   }, [navigate, setToken]);
 
+  // useEffect(() => {
+  //   console.log("region_id:", region_id, "species_id:", species_id);
+
+  //   const fetchItemDetails = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://farmersforforests.org/admin/acc/appdata/speciesdetailsinfo",
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             region_id: region_id,
+  //             species_id: species_id,
+  //           }),
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+
+  //       const data = await response.json();
+  //       const details = data.details_list_name[0];
+  //       setItem(details);
+
+  //       // Delay setting loading to false by 1 second
+  //       setTimeout(() => setLoading(false), 1000);
+  //     } catch (error) {
+  //       console.error("Error fetching item details:", error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchItemDetails();
+  // }, [region_id, species_id]);
+
+
+
+
+
+
   useEffect(() => {
     console.log("region_id:", region_id, "species_id:", species_id);
 
     const fetchItemDetails = async () => {
       try {
-        const response = await fetch(
-          "https://farmersforforests.org/admin/acc/appdata/speciesdetailsinfo",
+        const response = await axiosInstance.post(
+          "/admin/acc/appdata/speciesdetailsinfo",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              region_id: region_id,
-              species_id: species_id,
-            }),
+            region_id: region_id,
+            species_id: species_id,
           }
         );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        const details = data.details_list_name[0];
+          console.log("Axios",response);
+        const details = response.data.details_list_name[0];
         setItem(details);
 
         // Delay setting loading to false by 1 second
@@ -80,6 +113,10 @@ const ItemDetail = () => {
 
     fetchItemDetails();
   }, [region_id, species_id]);
+
+
+
+
 
   if (loading) {
     return <LoadingAnimation />; // Show the loading animation

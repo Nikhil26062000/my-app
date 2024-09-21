@@ -7,6 +7,7 @@ import LoadingAnimation from "./LoadingAnimation";
 import { useNavigate } from "react-router-dom";
 
 import ShimmerMap from "./Shimmer/ShimmerMap";
+import axiosInstance from "../utils/axiosInstance";
 
 const ScannedQrDetailPage = () => {
   const fixedColor = "#125B57";
@@ -18,35 +19,75 @@ const ScannedQrDetailPage = () => {
   const [isImageLoaded, setIsImageLoaded] = useState(false); // State to manage image load
 
 
+  // useEffect(() => {
+  //   const fetchQrData = async () => {
+  //     try {
+  //       // Make POST request with axios
+  //       const response = await axios.post(
+  //         "https://farmersforforests.org/admin/acc/appdata/qrinfo",
+  //         {
+  //           qrscan_id: id,
+  //         }
+  //       );
+
+  //       // Set the fetched data to state
+  //       setData(response.data);
+  //       console.log(response.data); // Log the data for debugging
+
+  //       // Simulate a delay before setting loading to false
+  //       setTimeout(() => {
+  //         setLoading(false);
+  //       }, 1000); // Adjust delay as needed (1000ms = 1 second)
+
+  //     } catch (error) {
+  //       console.error("Error fetching qrdata data:", error);
+  //       setError("Error fetching qrdata data"); // Set error message to state
+  //       setLoading(false); // Ensure loading is stopped on error
+  //     }
+  //   };
+
+  //   fetchQrData();
+  // }, [id]); // Add `id` as a dependency to re-fetch data if `id` changes
+
+
+  //! api call using axios instance
   useEffect(() => {
     const fetchQrData = async () => {
       try {
-        // Make POST request with axios
-        const response = await axios.post(
-          "https://farmersforforests.org/admin/acc/appdata/qrinfo",
+        console.log("axiossssssssssssssssss");
+        const response = await axiosInstance.post(
+          "/admin/acc/appdata/qrinfo",
           {
             qrscan_id: id,
           }
         );
 
-        // Set the fetched data to state
         setData(response.data);
-        console.log(response.data); // Log the data for debugging
+        console.log(response.data);
 
-        // Simulate a delay before setting loading to false
         setTimeout(() => {
           setLoading(false);
-        }, 1000); // Adjust delay as needed (1000ms = 1 second)
-
+        }, 1000);
       } catch (error) {
         console.error("Error fetching qrdata data:", error);
-        setError("Error fetching qrdata data"); // Set error message to state
-        setLoading(false); // Ensure loading is stopped on error
+        setError("Error fetching qrdata data");
+        setLoading(false);
       }
     };
 
     fetchQrData();
-  }, [id]); // Add `id` as a dependency to re-fetch data if `id` changes
+  }, [id]);
+
+
+
+
+
+
+
+
+
+
+
 
   if (loading) {
     return <LoadingAnimation />; // Render loader while data is loading
