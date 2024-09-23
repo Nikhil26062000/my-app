@@ -10,6 +10,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 import PostPage from "../../components/Shimmer/PostPage";
 import { api_url } from "../../constants";
+import axiosInstance from "../../utils/axiosInstance";
 
 const Posts = () => {
   const fixedColor = "#125B57";
@@ -43,53 +44,93 @@ const Posts = () => {
     };
   }, [navigate, setToken]);
 
+  // useEffect(() => {
+  //   const fetchPost = async () => {
+  //     try {
+  //       let uid = localStorage.getItem("userid");
+
+  //       // Create the request body
+  //       const requestBody = JSON.stringify({
+  //         userid: uid,
+  //       });
+
+  //       const response = await fetch(
+  //         `${api_url}/admin/acc/appdata/usersignaturelist`,
+  //         {
+  //           method: "POST", // Use POST method
+  //           headers: {
+  //             "Content-Type": "application/json", // Set content type to JSON
+  //           },
+  //           body: requestBody, // Send the user ID in the request body
+  //         }
+  //       );
+
+  //       // Check if the response status is OK
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+
+  //       // Check if the response content type is JSON
+  //       const contentType = response.headers.get("Content-Type");
+  //       if (contentType && contentType.includes("application/json")) {
+  //         // console.log(response);
+  //         const data = await response.json();
+  //         console.log(data);
+
+  //         setPostData(data.user_signature);
+  //         setPostLike(data.post_like);
+  //         setCommentsCount(data.comments);
+  //         setLoading(true);
+  //       } else {
+  //         const text = await response.text();
+  //         console.error("Unexpected content type:", contentType);
+  //         console.error("Response body:", text);
+  //       }
+  //     } catch (error) {
+  //       console.error("Fetch error:", error);
+  //     }
+  //   };
+
+  //   fetchPost();
+  // }, []);
+
+
+
+  //! fetching post using axios instance 
   useEffect(() => {
     const fetchPost = async () => {
       try {
         let uid = localStorage.getItem("userid");
-
+  
         // Create the request body
-        const requestBody = JSON.stringify({
+        const requestBody = {
           userid: uid,
-        });
-
-        const response = await fetch(
-          `${api_url}/admin/acc/appdata/usersignaturelist`,
-          {
-            method: "POST", // Use POST method
-            headers: {
-              "Content-Type": "application/json", // Set content type to JSON
-            },
-            body: requestBody, // Send the user ID in the request body
-          }
+        };
+  
+        // Make the POST request using axiosInstance
+        const response = await axiosInstance.post(
+          "/admin/acc/appdata/usersignaturelist",
+          requestBody
         );
-
-        // Check if the response status is OK
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        // Check if the response content type is JSON
-        const contentType = response.headers.get("Content-Type");
-        if (contentType && contentType.includes("application/json")) {
-          // console.log(response);
-          const data = await response.json();
+  
+        // Check if the response data is available
+        if (response && response.data) {
+          const data = response.data;
           console.log(data);
-
+  
+          // Set the states with the data received from the response
           setPostData(data.user_signature);
           setPostLike(data.post_like);
           setCommentsCount(data.comments);
           setLoading(true);
         } else {
-          const text = await response.text();
-          console.error("Unexpected content type:", contentType);
-          console.error("Response body:", text);
+          console.error("Unexpected response structure:", response);
         }
       } catch (error) {
         console.error("Fetch error:", error);
       }
     };
-
+  
     fetchPost();
   }, []);
 
