@@ -11,6 +11,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import PostPage from "../../components/Shimmer/PostPage";
 import { api_url } from "../../constants";
 import axiosInstance from "../../utils/axiosInstance";
+import { toast } from "react-toastify";
 
 const Posts = () => {
   const fixedColor = "#125B57";
@@ -127,7 +128,8 @@ const Posts = () => {
           console.error("Unexpected response structure:", response);
         }
       } catch (error) {
-        console.error("Fetch error:", error);
+        console.error("Fetch error:", error.response.data.msgtext);
+        toast.error(error.response.data.msgtext)
       }
     };
   

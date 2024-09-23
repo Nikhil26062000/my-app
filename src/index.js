@@ -12,7 +12,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+
   <MyProvider>
     <GoogleOAuthProvider clientId="204001944239-rv3mt7bjfk9bs1lbcasshvsg5df9ls3j.apps.googleusercontent.com">
       <App />
@@ -30,7 +30,7 @@ root.render(
       />
     </GoogleOAuthProvider>
     </MyProvider>
-  </React.StrictMode>
+ 
 );
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
