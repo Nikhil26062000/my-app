@@ -39,7 +39,7 @@ function App() {
   // const navigate = useNavigate()
   const {token} = useContext(MyContext)
  
-  // console.log = function () { }
+  console.log = function () { }
   
   
   return (

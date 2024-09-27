@@ -467,6 +467,7 @@ import { toast } from 'react-toastify';
 import SendIcon from '@mui/icons-material/Send';
 import LoadingAnimation from '../../components/LoadingAnimation';
 import { api_url } from '../../constants';
+import axiosInstance from '../../utils/axiosInstance';
 // import { Toast } from 'react-toastify/dist/components';
 
 const MediaCapture = ({ title }) => {
@@ -594,29 +595,26 @@ const MediaCapture = ({ title }) => {
   
     try {
       console.log(`${api_url}/admin/acc/appdata/usersignature`);
-      const response = await fetch(`${api_url}/admin/acc/appdata/usersignature`, {
-        method: 'POST',
-        body: formData,
-      });
+      const response = await  axiosInstance.post('/admin/acc/appdata/usersignature',formData);
       console.log(response);
   
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      console.log(response)
+      // if (!response.ok) {
+      //   throw new Error('Network response was not ok');
+      // }
+      // console.log(response)
   
-      const contentType = response.headers.get('content-type');
-      let data;
+      // const contentType = response.headers.get('content-type');
+      // let data;
   
-      if (contentType && contentType.includes('application/json')) {
-        data = await response.json();
-      } else {
-        const text = await response.text();
-        data = { msgtext: text };
-      }
-      console.log(data);
-      toast.success(data.msgtext);
-      setPopupMessage(data.msgtext);
+      // if (contentType && contentType.includes('application/json')) {
+      //   data = await response.json();
+      // } else {
+      //   const text = await response.text();
+      //   data = { msgtext: text };
+      // }
+      // console.log(data);
+      toast.success(response.data.msgtext);
+      setPopupMessage(response.data.msgtext);
       closePopup();
       setTimeout(() => setPopupMessage(''), 1000);
     } catch (error) {

@@ -115,21 +115,21 @@ const Posts = () => {
         );
   
         // Check if the response data is available
-        if (response && response.data) {
+        if (response && response?.data) {
           const data = response.data;
           console.log(data);
   
           // Set the states with the data received from the response
-          setPostData(data.user_signature);
-          setPostLike(data.post_like);
-          setCommentsCount(data.comments);
+          setPostData(data?.user_signature);
+          setPostLike(data?.post_like);
+          setCommentsCount(data?.comments);
           setLoading(true);
         } else {
           console.error("Unexpected response structure:", response);
         }
       } catch (error) {
-        console.error("Fetch error:", error.response.data.msgtext);
-        toast.error(error.response.data.msgtext)
+        console.error("Fetch error:", error.response?.data?.msgtext);
+        toast.error(error.response?.data?.msgtext)
       }
     };
   

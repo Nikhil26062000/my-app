@@ -299,6 +299,7 @@ import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear'; // Import ClearIcon from MUI
 import { api_url } from '../../../constants';
 import { toast } from 'react-toastify';
+import axiosInstance from '../../../utils/axiosInstance';
 
 const AudioRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -414,20 +415,12 @@ const AudioRecorder = () => {
         console.log(`${key}:`, value);
       }
   
-      const response = await fetch(`${api_url}/admin/acc/appdata/usersignature`, {
-        method: 'POST',
-        body: formData,
-      });
+      const response = await  axiosInstance.post('/admin/acc/appdata/usersignature',formData);
+      console.log(response);
   
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-  
-      const data = await response.json();
-      if(data.isValid===true) {
-        toast.success(data.msgtext)
-      }
-      console.log('Audio uploaded successfully:', data);
+    
+      toast.success(response.data?.msgtext)
+      console.log('Audio uploaded successfully:', response.data?.msgtext);
     } catch (error) {
       console.error('Error uploading audio:', error);
     }
