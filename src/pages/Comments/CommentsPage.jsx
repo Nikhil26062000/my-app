@@ -151,8 +151,8 @@ const CommentsPage = () => {
   return (
     <div>
       <Top_Header title="Comments" />
-      <div className="relative min-h-screen p-[20px] w-full mx-auto pb-10">
-        <h2 className="text-[16px] font-semibold mb-4">Comments</h2>
+      <div className="relative  p-[20px] w-full mx-auto pb-10 ">
+       
         <div className="comment-container">
           {total_fetched_comments?.map((comment) => (
             <div
@@ -161,7 +161,7 @@ const CommentsPage = () => {
             >
               {/* User Image */}
               <img
-                src="https://static.everypixel.com/ep-pixabay/0329/8099/0858/84037/3298099085884037069-head.png"
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                 alt="User"
                 className="w-12 h-12 rounded-full"
               />

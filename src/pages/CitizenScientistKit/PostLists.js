@@ -178,7 +178,7 @@ const PostLists = ({
           </p>
         </div>
 
-        <div className="w-[33%] flex justify-center items-center gap-2">
+        <div className="w-[33%] flex justify-center items-center gap-2" onClick={()=>alert("This feature is yet to come")}>
           <ShareIcon className="text-[15px] text-[#125B57]" />
           <p className="font-inter font-[400] text-[8px] leading-[9.86px]">
             Share

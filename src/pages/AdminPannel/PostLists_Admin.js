@@ -100,7 +100,7 @@ const PostLists_Admin = ({
     
   }
   return (
-    <section className="w-full bg-gray-300 py-2 my-5 shadow-md rounded-md">
+    <section className="w-full .main_div py-2 my-5 shadow-md rounded-md">
       <section className=" py-4 box-border pt-[12px] pr-[21px] pb-[0px] pl-[21px]">
         <div className="w-full  flex justify-start gap-[10px]">
           <Avatar

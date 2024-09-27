@@ -2,11 +2,13 @@ import React from 'react';
 import CTA from '../../components/components/Common_Components/CTA';
 import Toggle_login_signup from '../../components/components/Common_Components/Toggle_login_signup';
 import { useNavigate } from 'react-router-dom';
+import InstallPWAComponent from '../../components/InstallPWAComponent ';
 
 const Landing = () => {
     const navigate = useNavigate()
   return (
     <div className="w-full h-screen flex flex-col justify-between  ">
+    <InstallPWAComponent/> 
       {/* 1st section */}
       <section className="w-full px-[20px] flex gap-[4%] items-start h-[200px] pt-[100px]">
         {/* 2 images */}
