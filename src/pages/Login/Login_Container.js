@@ -4,8 +4,8 @@ import Login_Form from "./Login_Form";
 
 const Login_Container = () => {
   return (
-    <div className="absolute  w-full top-[158px]">
-      <Signup_Login_Header heading="Log in" paragraph="Hello, welcome back!" />
+    <div className="absolute  w-full ">
+      {/* <Signup_Login_Header heading="Log in" paragraph="Hello, welcome back!" /> */}
       <Login_Form/>
     </div>
   );

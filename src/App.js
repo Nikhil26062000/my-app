@@ -32,8 +32,11 @@ import AudioRecorder from "./pages/CitizenScientistKit/Audio/Audio.jsx";
 import CommentsPage from "./pages/Comments/CommentsPage.jsx";
 import Post_Page_Admin from './pages/AdminPannel/Post_Page_Admin.js'
 import Admin_Privilege from "./pages/AdminPannel/Admin_Privilege.js";
+import { useNavigate } from "react-router-dom";
+import LoadingAnimation from "./components/LoadingAnimation.js";
 
 function App() {
+  // const navigate = useNavigate()
   const {token} = useContext(MyContext)
  
   // console.log = function () { }
@@ -67,6 +70,8 @@ function App() {
           <Route path="/posts/:id" element={token ? <CommentsPage /> : <Navigate to="/" />} />
           <Route path="/posts/admin/edit" element={token ? <Post_Page_Admin /> : <Navigate to="/" />} />
           <Route path="/admin/privilege" element={token ? <Admin_Privilege /> : <Navigate to="/" />} />
+          <Route path="/loader" element={<LoadingAnimation/>} />
+
          
           <Route path="/qrDetails/:id" element={token ? <ScannedQrDetailPage /> : <Navigate to="/" />} />
           <Route path="/camera" element={token ? <MediaCapture /> : <Navigate to="/" />} />

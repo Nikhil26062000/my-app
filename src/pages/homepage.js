@@ -178,7 +178,7 @@ const HomePage = () => {
     { label: "Central Forest", color: "#E05555", id: "er101" },
     { label: "Mandala Garden", color: "#125B57", id: "er104" },
     { label: "Dry and Arid Region", color: "#F4910F", id: "er102" },
-    { label: "Grasslands", color: "#86A34D", id: "er103" },
+
   ];
 
   const handleButtonClick = (btn) => {
