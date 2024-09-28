@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CameraAlt, Stop, SwitchCamera } from "@mui/icons-material"; // Import icons from Material UI
 import ClearIcon from '@mui/icons-material/Clear';
 import Footer from "../../../components/Footer";
 import { api_url } from "../../../constants";
 import { toast } from "react-toastify";
+import { MyContext } from "../../../context/accountProvider";
 
 
 const RecordView = ({ title }) => {
@@ -20,6 +21,25 @@ const RecordView = ({ title }) => {
   const chunksRef = useRef([]);
   const streamRef = useRef(null); // To hold the stream for switching cameras
   const navigate = useNavigate();
+
+  const { token, setToken } = useContext(MyContext);
+  useEffect(() => {
+    const checkToken = () => {
+      const storedToken = localStorage.getItem("token");
+      if (!storedToken) {
+        setToken(null);
+        navigate("/");
+      }
+    };
+
+    checkToken();
+    window.addEventListener("storage", checkToken);
+
+    return () => {
+      window.removeEventListener("storage", checkToken);
+    };
+  }, [navigate, setToken]);
+
 
   useEffect(() => {
     // Automatically open the camera when the component mounts
