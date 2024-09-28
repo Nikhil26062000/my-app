@@ -294,12 +294,13 @@
 
 
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear'; // Import ClearIcon from MUI
 import { api_url } from '../../../constants';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../../utils/axiosInstance';
+import { MyContext } from '../../../context/accountProvider';
 
 const AudioRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -312,6 +313,26 @@ const AudioRecorder = () => {
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
   const navigate = useNavigate();
+  const { token, setToken } = useContext(MyContext);
+
+
+  //------------- If token removes from browser manually then automatically user logout -----------------------------------------
+  useEffect(() => {
+    const checkToken = () => {
+      const storedToken = localStorage.getItem("token");
+      if (!storedToken) {
+        setToken(null);
+        navigate("/");
+      }
+    };
+
+    checkToken();
+    window.addEventListener("storage", checkToken);
+
+    return () => {
+      window.removeEventListener("storage", checkToken);
+    };
+  }, [navigate, setToken]);
 
   const startTimer = () => {
     timerRef.current = setInterval(() => {
